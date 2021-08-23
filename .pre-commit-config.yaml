@@ -1,0 +1,37 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: trailing-whitespace
+      - id: check-merge-conflict
+      - id: detect-aws-credentials
+        args: ['--allow-missing-credentials']
+      - id: detect-private-key
+      - id: end-of-file-fixer
+
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.12
+    hooks:
+      - id: tflint
+      - id: terraform-validate
+
+  - repo: git://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.50.0
+    hooks:
+    - id: terraform_fmt
+    - id: terraform_tflint
+    #- id: terraform_tfsec
+    - id: terraform_docs
+      args:
+        - '--args=--hide providers --sort-by required'
+
+  - repo: git://github.com/pecigonzalo/pre-commit-terraform-vars
+    rev: v1.0.0
+    hooks:
+    - id: terraform-vars
+
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.1.0
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
