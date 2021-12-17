@@ -21,7 +21,7 @@ data "utils_deep_merge_yaml" "values" {
   ])
 }
 
-resource "helm_release" "cluster_autoscaler" {
+resource "helm_release" "aws-load-balancer-controller" {
   count            = var.enabled && !var.argo_application_enabled ? 1 : 0
   chart            = var.helm_chart_name
   create_namespace = var.helm_create_namespace
