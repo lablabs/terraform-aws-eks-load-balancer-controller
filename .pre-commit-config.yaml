@@ -9,18 +9,13 @@ repos:
       - id: detect-private-key
       - id: end-of-file-fixer
 
-  - repo: https://github.com/gruntwork-io/pre-commit
-    rev: v0.1.12
-    hooks:
-      - id: tflint
-      - id: terraform-validate
-
   - repo: git://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.50.0
+    rev: v1.60.0
     hooks:
     - id: terraform_fmt
     - id: terraform_tflint
-    #- id: terraform_tfsec
+    - id: terraform_validate
+    - id: checkov
     - id: terraform_docs
       args:
         - '--args=--hide providers --sort-by required'
