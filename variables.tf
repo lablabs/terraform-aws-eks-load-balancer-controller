@@ -127,6 +127,11 @@ variable "argo_info" {
 }
 
 variable "argo_sync_policy" {
-  description = "ArgoCD syncPolicy manifest parameter"
   default     = {}
+  description = "ArgoCD syncPolicy manifest parameter"
+}
+
+variable "argo_spec" {
+  default     = {}
+  description = "ArgoCD additional spec configuration"
 }

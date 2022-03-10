@@ -23,8 +23,12 @@ locals {
 data "utils_deep_merge_yaml" "argo_application_values" {
   count = var.enabled && var.argo_application_enabled && var.argo_application_use_helm ? 1 : 0
   input = compact([
-    yamlencode(local.argo_application_values),
-    var.argo_application_values
+    yamlencode({
+      "spec" : local.argo_application_values
+    }),
+    yamlencode({
+      "spec" : yamldecode(var.argo_application_values)
+    })
   ])
 }
 
@@ -40,6 +44,13 @@ resource "helm_release" "argocd_application" {
   ]
 }
 
+data "utils_deep_merge_yaml" "argo_spec" {
+  count = var.enabled && var.argo_application_enabled && !var.argo_application_use_helm ? 1 : 0
+  input = compact([
+    yamlencode(local.argo_application_values),
+    yamlencode(var.argo_spec)
+  ])
+}
 
 resource "kubernetes_manifest" "self" {
   count = var.enabled && var.argo_application_enabled && !var.argo_application_use_helm ? 1 : 0
@@ -50,6 +61,6 @@ resource "kubernetes_manifest" "self" {
       "name"      = var.helm_release_name
       "namespace" = var.argo_namespace
     }
-    "spec" = local.argo_application_values
+    "spec" = yamldecode(data.utils_deep_merge_yaml.argo_spec[0].output)
   }
 }
