@@ -60,15 +60,27 @@ variable "k8s_service_account_create" {
   description = "Whether to create Service Account"
 }
 
+variable "k8s_service_account_name" {
+  default     = "aws-load-balancer-controller"
+  description = "The k8s aws-loab-balancer-controller service account name"
+}
+
 variable "k8s_irsa_role_create" {
   type        = bool
   default     = true
   description = "Whether to create IRSA role and annotate service account"
 }
 
-variable "k8s_service_account_name" {
-  default     = "aws-load-balancer-controller"
-  description = "The k8s aws-loab-balancer-controller service account name"
+variable "k8s_irsa_role_name_prefix" {
+  type        = string
+  default     = "lb-controller-irsa"
+  description = "The IRSA role name prefix for LB controller"
+}
+
+variable "k8s_irsa_policy_enabled" {
+  type        = bool
+  default     = true
+  description = "Whether to create opinionated policy for LB controller, see https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/v2.4.0/docs/install/iam_policy.json"
 }
 
 variable "settings" {
@@ -129,4 +141,10 @@ variable "argo_info" {
 variable "argo_sync_policy" {
   description = "ArgoCD syncPolicy manifest parameter"
   default     = {}
+}
+
+variable "tags" {
+  type        = map(string)
+  default     = {}
+  description = "AWS resources tags"
 }
