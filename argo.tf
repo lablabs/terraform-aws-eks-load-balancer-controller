@@ -20,32 +20,33 @@ locals {
   }
 }
 
-data "utils_deep_merge_yaml" "argo_application_values" {
-  count = var.enabled && var.argo_application_enabled && var.argo_application_use_helm ? 1 : 0
+data "utils_deep_merge_yaml" "argo_helm_values" {
+  count = var.enabled && var.argo_enabled && var.argo_helm_enabled ? 1 : 0
   input = compact([
     yamlencode({
       "spec" : local.argo_application_values
     }),
     yamlencode({
-      "spec" : yamldecode(var.argo_application_values)
+      "spec" : var.argo_spec
     })
   ])
 }
 
-resource "helm_release" "argocd_application" {
-  count = var.enabled && var.argo_application_enabled && var.argo_application_use_helm ? 1 : 0
+resource "helm_release" "argo_application" {
+  count = var.enabled && var.argo_enabled && var.argo_helm_enabled ? 1 : 0
 
   chart     = "${path.module}/helm/argocd-application"
   name      = var.helm_release_name
   namespace = var.argo_namespace
 
   values = [
-    data.utils_deep_merge_yaml.argo_application_values[0].output
+    data.utils_deep_merge_yaml.argo_helm_values[0].output,
+    var.argo_helm_values
   ]
 }
 
 data "utils_deep_merge_yaml" "argo_spec" {
-  count = var.enabled && var.argo_application_enabled && !var.argo_application_use_helm ? 1 : 0
+  count = var.enabled && var.argo_enabled && !var.argo_helm_enabled ? 1 : 0
   input = compact([
     yamlencode(local.argo_application_values),
     yamlencode(var.argo_spec)
@@ -53,7 +54,7 @@ data "utils_deep_merge_yaml" "argo_spec" {
 }
 
 resource "kubernetes_manifest" "self" {
-  count = var.enabled && var.argo_application_enabled && !var.argo_application_use_helm ? 1 : 0
+  count = var.enabled && var.argo_enabled && !var.argo_helm_enabled ? 1 : 0
   manifest = {
     "apiVersion" = "argoproj.io/v1alpha1"
     "kind"       = "Application"
