@@ -101,19 +101,19 @@ variable "argo_namespace" {
   description = "Namespace to deploy ArgoCD application CRD to"
 }
 
-variable "argo_application_enabled" {
+variable "argo_enabled" {
   type        = bool
   default     = false
   description = "If set to true, the module will be deployed as ArgoCD application, otherwise it will be deployed as a Helm release"
 }
 
-variable "argo_application_use_helm" {
+variable "argo_helm_enabled" {
   type        = bool
   default     = false
   description = "If set to true, the ArgoCD Application manifest will be deployed using Kubernetes provider as a Helm release. Otherwise it'll be deployed as a Kubernetes manifest. See Readme for more info"
 }
 
-variable "argo_application_values" {
+variable "argo_helm_values" {
   default     = ""
   description = "Value overrides to use when deploying argo application object with helm"
 }
@@ -139,8 +139,13 @@ variable "argo_info" {
 }
 
 variable "argo_sync_policy" {
-  description = "ArgoCD syncPolicy manifest parameter"
   default     = {}
+  description = "ArgoCD syncPolicy manifest parameter"
+}
+
+variable "argo_spec" {
+  default     = {}
+  description = "ArgoCD spec configuration. Override or create additional manifest parameters"
 }
 
 variable "tags" {
