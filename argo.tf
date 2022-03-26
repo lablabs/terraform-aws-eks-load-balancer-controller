@@ -45,14 +45,6 @@ resource "helm_release" "argo_application" {
   ]
 }
 
-data "utils_deep_merge_yaml" "argo_spec" {
-  count = var.enabled && var.argo_enabled && !var.argo_helm_enabled ? 1 : 0
-  input = compact([
-    yamlencode(local.argo_application_values),
-    yamlencode(var.argo_spec)
-  ])
-}
-
 resource "kubernetes_manifest" "this" {
   count = var.enabled && var.argo_enabled && !var.argo_helm_enabled ? 1 : 0
   manifest = {
@@ -62,6 +54,9 @@ resource "kubernetes_manifest" "this" {
       "name"      = var.helm_release_name
       "namespace" = var.argo_namespace
     }
-    "spec" = yamldecode(data.utils_deep_merge_yaml.argo_spec[0].output)
+    "spec" = merge(
+      local.argo_application_values,
+      var.argo_spec
+    )
   }
 }
