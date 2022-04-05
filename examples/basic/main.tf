@@ -46,7 +46,7 @@ module "lbc_disabled" {
 module "lbc_without_irsa_role" {
   source = "../../"
 
-  k8s_irsa_role_create             = false
+  irsa_role_create                 = false
   cluster_name                     = module.eks_cluster.eks_cluster_id
   cluster_identity_oidc_issuer     = module.eks_cluster.eks_cluster_identity_oidc_issuer
   cluster_identity_oidc_issuer_arn = module.eks_cluster.eks_cluster_identity_oidc_issuer_arn
@@ -56,7 +56,7 @@ module "lbc_without_irsa_role" {
 module "lbc_without_irsa_policy" {
   source = "../../"
 
-  k8s_irsa_policy_enabled          = false
+  irsa_policy_enabled              = false
   cluster_name                     = module.eks_cluster.eks_cluster_id
   cluster_identity_oidc_issuer     = module.eks_cluster.eks_cluster_identity_oidc_issuer
   cluster_identity_oidc_issuer_arn = module.eks_cluster.eks_cluster_identity_oidc_issuer_arn
@@ -75,7 +75,7 @@ module "lb_controller_helm" {
   cluster_identity_oidc_issuer_arn = module.eks_cluster.eks_cluster_identity_oidc_issuer_arn
 
   helm_release_name = "aws-lbc-helm"
-  k8s_namespace     = "aws-lb-controller-helm"
+  namespace         = "aws-lb-controller-helm"
 
   values = yamlencode({
     "podLabels" : {
@@ -99,7 +99,7 @@ module "lb_controller_argo_kubernetes" {
   cluster_identity_oidc_issuer_arn = module.eks_cluster.eks_cluster_identity_oidc_issuer_arn
 
   helm_release_name = "aws-lbc-argo-kubernetes"
-  k8s_namespace     = "aws-lb-controller-argo-kubernetes"
+  namespace         = "aws-lb-controller-argo-kubernetes"
 
   argo_sync_policy = {
     "automated" : {}
@@ -119,7 +119,7 @@ module "lb_controller_argo_helm" {
   cluster_identity_oidc_issuer_arn = module.eks_cluster.eks_cluster_identity_oidc_issuer_arn
 
   helm_release_name = "aws-lbc-argo-helm"
-  k8s_namespace     = "aws-lb-controller-argo-helm"
+  namespace         = "aws-lb-controller-argo-helm"
 
   argo_namespace = "argo"
   argo_sync_policy = {

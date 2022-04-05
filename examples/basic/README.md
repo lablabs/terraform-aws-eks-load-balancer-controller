@@ -15,7 +15,7 @@ Create helm release resource and deploy it as argo application (set `enabled = t
 
 ## AWS IAM resources
 
-To disable of creation IRSA role and IRSA policy, set `k8s_irsa_role_create = false` and `k8s_irsa_policy_enabled = false`, respectively
+To disable of creation IRSA role and IRSA policy, set `irsa_role_create = false` and `irsa_policy_enabled = false`, respectively
 
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

@@ -2,10 +2,10 @@ locals {
   values = yamlencode({
     "clusterName" : var.cluster_name
     "serviceAccount" : {
-      "create" : var.k8s_service_account_create
-      "name" : var.k8s_service_account_name
+      "create" : var.service_account_create
+      "name" : var.service_account_name
       "annotations" : {
-        "eks.amazonaws.com/role-arn" : local.k8s_irsa_role_create ? aws_iam_role.this[0].arn : ""
+        "eks.amazonaws.com/role-arn" : local.irsa_role_create ? aws_iam_role.this[0].arn : ""
       }
     }
   })

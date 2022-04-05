@@ -4,11 +4,6 @@ variable "enabled" {
   description = "Variable indicating whether deployment is enabled"
 }
 
-variable "cluster_name" {
-  type        = string
-  description = "The name of the cluster"
-}
-
 variable "cluster_identity_oidc_issuer" {
   type        = string
   description = "The OIDC Identity issuer for the cluster"
@@ -27,7 +22,7 @@ variable "helm_chart_name" {
 
 variable "helm_chart_version" {
   type        = string
-  default     = "1.4.0"
+  default     = "1.4.1"
   description = "Version of the Helm chart"
 }
 
@@ -42,45 +37,50 @@ variable "helm_repo_url" {
   description = "Helm repository"
 }
 
-variable "helm_create_namespace" {
-  type        = bool
-  default     = true
-  description = "Create the namespace if it does not yet exist"
-}
-
-variable "k8s_namespace" {
+variable "namespace" {
   type        = string
   default     = "aws-lb-controller"
-  description = "The K8s namespace in which the node-problem-detector service account has been created"
+  description = "The K8s namespace in which the aws-load-balancer-controller service account has been created"
 }
 
-variable "k8s_service_account_create" {
+variable "service_account_create" {
   type        = bool
   default     = true
   description = "Whether to create Service Account"
 }
 
-variable "k8s_service_account_name" {
+variable "service_account_name" {
   default     = "aws-load-balancer-controller"
   description = "The k8s aws-loab-balancer-controller service account name"
 }
 
-variable "k8s_irsa_role_create" {
+variable "irsa_role_create" {
   type        = bool
   default     = true
   description = "Whether to create IRSA role and annotate service account"
 }
 
-variable "k8s_irsa_role_name_prefix" {
+variable "irsa_role_name_prefix" {
   type        = string
   default     = "lb-controller-irsa"
   description = "The IRSA role name prefix for LB controller"
 }
 
-variable "k8s_irsa_policy_enabled" {
+variable "irsa_policy_enabled" {
   type        = bool
   default     = true
   description = "Whether to create opinionated policy for LB controller, see https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/v2.4.0/docs/install/iam_policy.json"
+}
+
+variable "irsa_tags" {
+  type        = map(string)
+  default     = {}
+  description = "IRSA resources tags"
+}
+
+variable "cluster_name" {
+  type        = string
+  description = "The name of the cluster"
 }
 
 variable "settings" {
@@ -95,27 +95,16 @@ variable "values" {
   description = "Additional yaml encoded values which will be passed to the Helm chart, see https://github.com/aws/eks-charts/tree/master/stable/aws-load-balancer-controller"
 }
 
-variable "argo_namespace" {
-  type        = string
-  default     = "argo"
-  description = "Namespace to deploy ArgoCD application CRD to"
-}
-
 variable "argo_enabled" {
   type        = bool
   default     = false
   description = "If set to true, the module will be deployed as ArgoCD application, otherwise it will be deployed as a Helm release"
 }
 
-variable "argo_helm_enabled" {
-  type        = bool
-  default     = false
-  description = "If set to true, the ArgoCD Application manifest will be deployed using Kubernetes provider as a Helm release. Otherwise it'll be deployed as a Kubernetes manifest. See Readme for more info"
-}
-
-variable "argo_helm_values" {
-  default     = ""
-  description = "Value overrides to use when deploying argo application object with helm"
+variable "argo_namespace" {
+  type        = string
+  default     = "argo"
+  description = "Namespace to deploy ArgoCD application CRD to"
 }
 
 variable "argo_destionation_server" {
@@ -143,15 +132,60 @@ variable "argo_sync_policy" {
   description = "ArgoCD syncPolicy manifest parameter"
 }
 
-variable "argo_spec" {
+variable "argo_metadata" {
   default     = {}
-  description = "ArgoCD spec configuration. Override or create additional manifest parameters"
+  description = "ArgoCD Application metadata configuration. Override or create additional metadata parameters"
 }
 
-variable "tags" {
+variable "argo_spec" {
+  default     = {}
+  description = "ArgoCD Application spec configuration. Override or create additional spec parameters"
+}
+
+variable "argo_apiversion" {
+  default     = "argoproj.io/v1alpha1"
+  description = "ArgoCD Appliction apiVersion"
+}
+
+variable "argo_kubernetes_manifest_computed_fields" {
+  type        = list(string)
+  default     = ["metadata.labels", "metadata.annotations"]
+  description = "List of paths of fields to be handled as \"computed\". The user-configured value for the field will be overridden by any different value returned by the API after apply."
+}
+
+variable "argo_kubernetes_manifest_field_manager_name" {
+  default     = "Terraform"
+  description = "The name of the field manager to use when applying the kubernetes manifest resource. Defaults to Terraform"
+}
+
+variable "argo_kubernetes_manifest_field_manager_force_conflicts" {
+  type        = bool
+  default     = false
+  description = "Forcibly override any field manager conflicts when applying the kubernetes manifest resource"
+}
+
+variable "argo_kubernetes_manifest_wait_for_fields" {
   type        = map(string)
   default     = {}
-  description = "AWS resources tags"
+  description = "A map of fields and a corresponding regular expression with a pattern to wait for. The provider will wait until the field matches the regular expression. Use * for any value."
+}
+
+variable "argo_helm_enabled" {
+  type        = bool
+  default     = false
+  description = "If set to true, the ArgoCD Application manifest will be deployed using Kubernetes provider as a Helm release. Otherwise it'll be deployed as a Kubernetes manifest. See Readme for more info"
+}
+
+variable "argo_helm_values" {
+  type        = string
+  default     = ""
+  description = "Value overrides to use when deploying argo application object with helm"
+}
+
+variable "helm_create_namespace" {
+  type        = bool
+  default     = true
+  description = "Create the namespace if it does not yet exist"
 }
 
 variable "helm_repo_key_file" {

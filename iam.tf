@@ -1,10 +1,10 @@
 locals {
-  k8s_irsa_role_create = var.enabled && var.k8s_service_account_create && var.k8s_irsa_role_create
+  irsa_role_create = var.enabled && var.service_account_create && var.irsa_role_create
 
 }
 
 data "aws_iam_policy_document" "this" {
-  count = local.k8s_irsa_role_create && var.k8s_irsa_policy_enabled ? 1 : 0
+  count = local.irsa_role_create && var.irsa_policy_enabled ? 1 : 0
 
   # https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/v2.4.0/docs/install/iam_policy.json
   #checkov:skip=CKV_AWS_109:The official documentation was used to define these policies
@@ -251,17 +251,17 @@ data "aws_iam_policy_document" "this" {
 }
 
 resource "aws_iam_policy" "this" {
-  count       = local.k8s_irsa_role_create && var.k8s_irsa_policy_enabled ? 1 : 0
-  name        = "${var.k8s_irsa_role_name_prefix}-${var.helm_release_name}"
+  count       = local.irsa_role_create && var.irsa_policy_enabled ? 1 : 0
+  name        = "${var.irsa_role_name_prefix}-${var.helm_release_name}"
   path        = "/"
   description = "Policy for aws-load-balancer-controller service"
 
   policy = data.aws_iam_policy_document.this[0].json
-  tags   = var.tags
+  tags   = var.irsa_tags
 }
 
 data "aws_iam_policy_document" "this_assume" {
-  count = local.k8s_irsa_role_create ? 1 : 0
+  count = local.irsa_role_create ? 1 : 0
 
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
@@ -276,7 +276,7 @@ data "aws_iam_policy_document" "this_assume" {
       variable = "${replace(var.cluster_identity_oidc_issuer, "https://", "")}:sub"
 
       values = [
-        "system:serviceaccount:${var.k8s_namespace}:${var.k8s_service_account_name}",
+        "system:serviceaccount:${var.namespace}:${var.service_account_name}",
       ]
     }
 
@@ -285,16 +285,16 @@ data "aws_iam_policy_document" "this_assume" {
 }
 
 resource "aws_iam_role" "this" {
-  count = local.k8s_irsa_role_create ? 1 : 0
+  count = local.irsa_role_create ? 1 : 0
 
-  name               = "${var.k8s_irsa_role_name_prefix}-${var.helm_release_name}"
+  name               = "${var.irsa_role_name_prefix}-${var.helm_release_name}"
   assume_role_policy = data.aws_iam_policy_document.this_assume[0].json
 
-  tags = var.tags
+  tags = var.irsa_tags
 }
 
 resource "aws_iam_role_policy_attachment" "this" {
-  count = local.k8s_irsa_role_create ? 1 : 0
+  count = local.irsa_role_create ? 1 : 0
 
   role       = aws_iam_role.this[0].name
   policy_arn = aws_iam_policy.this[0].arn
