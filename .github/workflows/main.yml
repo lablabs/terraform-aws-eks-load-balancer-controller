@@ -72,7 +72,7 @@ jobs:
           pip install detect-secrets
 
       - shell: bash
-        name: "INSTALL: detect-secrets"
+        name: "INSTALL: checkov"
         run: |
           pip install checkov
 
