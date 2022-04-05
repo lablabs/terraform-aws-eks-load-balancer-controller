@@ -72,6 +72,11 @@ jobs:
           pip install detect-secrets
 
       - shell: bash
+        name: "INSTALL: detect-secrets"
+        run: |
+          pip install checkov
+
+      - shell: bash
         name: "INSTALL: tflint"
         if: steps.cache-tflint.outputs.cache-hit != 'true'
         run: |
@@ -85,7 +90,7 @@ jobs:
         run: echo '~/tflint/bin/' >> $GITHUB_PATH
 
       - shell: bash
-        name: Init TFLint
+        name: "INIT: TFLint"
         run: tflint --init
 
       - uses: actions/cache@v2
