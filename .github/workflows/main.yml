@@ -8,7 +8,7 @@ on:
 
 env:
   TERRAFORM_DOCS_VERSION: "v0.16.0"
-  TFLINT_VERSION: "v0.34.1"
+  TFLINT_VERSION: "v0.35.0"
   TFSEC_VERSION: "v1.6.2"
 
 jobs:
