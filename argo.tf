@@ -17,7 +17,7 @@ locals {
       }
     }
     "destination" : {
-      "server" : var.argo_destionation_server
+      "server" : var.argo_destination_server
       "namespace" : var.namespace
     }
     "syncPolicy" : var.argo_sync_policy

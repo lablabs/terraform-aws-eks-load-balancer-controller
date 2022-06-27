@@ -1,6 +1,5 @@
 locals {
   irsa_role_create = var.enabled && var.service_account_create && var.irsa_role_create
-
 }
 
 data "aws_iam_policy_document" "this" {

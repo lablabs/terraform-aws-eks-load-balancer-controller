@@ -107,7 +107,7 @@ variable "argo_namespace" {
   description = "Namespace to deploy ArgoCD application CRD to"
 }
 
-variable "argo_destionation_server" {
+variable "argo_destination_server" {
   type        = string
   default     = "https://kubernetes.default.svc"
   description = "Destination server for ArgoCD Application"
