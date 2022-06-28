@@ -15,7 +15,7 @@ A terraform module to deploy the AWS load balancer controller on Amazon EKS clus
 
 ## Related Projects
 
-Check out these [related projects](https://github.com/orgs/lablabs/repositories?q=terraform-aws-eks&type=public&language=&sort=).
+Check out other [terraform kubernetes addons](https://github.com/orgs/lablabs/repositories?q=terraform-aws-eks&type=public&language=&sort=).
 
 ## Deployment methods
 
