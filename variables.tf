@@ -22,7 +22,7 @@ variable "helm_chart_name" {
 
 variable "helm_chart_version" {
   type        = string
-  default     = "1.4.1"
+  default     = "1.4.2"
   description = "Version of the Helm chart"
 }
 
@@ -107,7 +107,7 @@ variable "argo_namespace" {
   description = "Namespace to deploy ArgoCD application CRD to"
 }
 
-variable "argo_destionation_server" {
+variable "argo_destination_server" {
   type        = string
   default     = "https://kubernetes.default.svc"
   description = "Destination server for ArgoCD Application"
@@ -133,7 +133,11 @@ variable "argo_sync_policy" {
 }
 
 variable "argo_metadata" {
-  default     = {}
+  default = {
+    "finalizers" : [
+      "resources-finalizer.argocd.argoproj.io"
+    ]
+  }
   description = "ArgoCD Application metadata configuration. Override or create additional metadata parameters"
 }
 
@@ -164,7 +168,7 @@ variable "argo_kubernetes_manifest_field_manager_force_conflicts" {
   description = "Forcibly override any field manager conflicts when applying the kubernetes manifest resource"
 }
 
-variable "argo_kubernetes_manifest_wait_for_fields" {
+variable "argo_kubernetes_manifest_wait_fields" {
   type        = map(string)
   default     = {}
   description = "A map of fields and a corresponding regular expression with a pattern to wait for. The provider will wait until the field matches the regular expression. Use * for any value."
