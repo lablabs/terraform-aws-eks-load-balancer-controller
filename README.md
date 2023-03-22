@@ -1,6 +1,7 @@
 # AWS EKS load balancer controller Terraform module
 
-[![labyrinth labs logo](ll-logo.png)](https://lablabs.io/)
+[<img src="https://lablabs.io/static/ll-logo.png" width=350px>](https://lablabs.io/)
+
 
 We help companies build, run, deploy and scale software and infrastructure by embracing the right technologies and principles. Check out our website at <https://lablabs.io/>
 
