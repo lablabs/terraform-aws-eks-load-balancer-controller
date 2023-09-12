@@ -149,7 +149,8 @@ data "aws_iam_policy_document" "this" {
     effect = "Allow"
     actions = [
       "elasticloadbalancing:CreateLoadBalancer",
-      "elasticloadbalancing:CreateTargetGroup"
+      "elasticloadbalancing:CreateTargetGroup",
+      "elasticloadbalancing:AddTags"
     ]
     resources = ["*"]
     condition {
@@ -165,7 +166,8 @@ data "aws_iam_policy_document" "this" {
       "elasticloadbalancing:CreateListener",
       "elasticloadbalancing:DeleteListener",
       "elasticloadbalancing:CreateRule",
-      "elasticloadbalancing:DeleteRule"
+      "elasticloadbalancing:DeleteRule",
+      "elasticloadbalancing:AddTags"
     ]
     resources = ["*"]
   }
