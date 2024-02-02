@@ -8,7 +8,7 @@ data "aws_iam_policy_document" "this" {
   # https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/v2.4.0/docs/install/iam_policy.json
   #checkov:skip=CKV_AWS_109:The official documentation was used to define these policies
   #checkov:skip=CKV_AWS_111:The official documentation was used to define these policies
-
+  #checkov:skip=CKV_AWS_356
   statement {
     effect = "Allow"
     actions = [
@@ -47,7 +47,8 @@ data "aws_iam_policy_document" "this" {
       "elasticloadbalancing:DescribeTargetGroups",
       "elasticloadbalancing:DescribeTargetGroupAttributes",
       "elasticloadbalancing:DescribeTargetHealth",
-      "elasticloadbalancing:DescribeTags"
+      "elasticloadbalancing:DescribeTags",
+      "elasticloadbalancing:DescribeTrustStores"
     ]
     resources = ["*"]
   }

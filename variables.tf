@@ -22,7 +22,7 @@ variable "helm_chart_name" {
 
 variable "helm_chart_version" {
   type        = string
-  default     = "1.4.8"
+  default     = "1.7.0"
   description = "Version of the Helm chart"
 }
 
@@ -125,10 +125,12 @@ variable "argo_info" {
     name  = string
     value = string
   }))
-  default = [{
-    "name"  = "terraform"
-    "value" = "true"
-  }]
+  default = [
+    {
+      "name"  = "terraform"
+      "value" = "true"
+    }
+  ]
   description = "ArgoCD info manifest parameter"
 }
 
