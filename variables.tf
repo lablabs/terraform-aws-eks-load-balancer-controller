@@ -141,7 +141,7 @@ variable "argo_sync_policy" {
 }
 
 variable "argo_metadata" {
-  type    = any
+  type = any
   default = {
     "finalizers" : [
       "resources-finalizer.argocd.argoproj.io"
