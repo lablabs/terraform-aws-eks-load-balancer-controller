@@ -10,7 +10,7 @@ data "aws_iam_policy_document" "this" {
   #checkov:skip=CKV_AWS_111:The official documentation was used to define these policies
 
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = [
       "iam:CreateServiceLinkedRole"
     ]
@@ -23,7 +23,7 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = [
       "ec2:DescribeAccountAttributes",
       "ec2:DescribeAddresses",
@@ -47,13 +47,14 @@ data "aws_iam_policy_document" "this" {
       "elasticloadbalancing:DescribeTargetGroups",
       "elasticloadbalancing:DescribeTargetGroupAttributes",
       "elasticloadbalancing:DescribeTargetHealth",
-      "elasticloadbalancing:DescribeTags"
+      "elasticloadbalancing:DescribeTags",
+      "elasticloadbalancing:DescribeTrustStores"
     ]
     resources = ["*"]
   }
 
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = [
       "cognito-idp:DescribeUserPoolClient",
       "acm:ListCertificates",
@@ -77,7 +78,7 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = [
       "ec2:AuthorizeSecurityGroupIngress",
       "ec2:RevokeSecurityGroupIngress"
@@ -86,7 +87,7 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = [
       "ec2:CreateSecurityGroup"
     ]
@@ -94,7 +95,7 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = [
       "ec2:CreateTags"
     ]
@@ -112,7 +113,7 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = [
       "ec2:CreateTags",
       "ec2:DeleteTags"
@@ -131,7 +132,7 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = [
       "ec2:AuthorizeSecurityGroupIngress",
       "ec2:RevokeSecurityGroupIngress",
@@ -146,7 +147,7 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = [
       "elasticloadbalancing:CreateLoadBalancer",
       "elasticloadbalancing:CreateTargetGroup"
@@ -160,7 +161,7 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = [
       "elasticloadbalancing:CreateListener",
       "elasticloadbalancing:DeleteListener",
@@ -171,7 +172,7 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = [
       "elasticloadbalancing:AddTags",
       "elasticloadbalancing:RemoveTags"
@@ -194,7 +195,7 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = [
       "elasticloadbalancing:AddTags",
       "elasticloadbalancing:RemoveTags"
@@ -208,7 +209,7 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = [
       "elasticloadbalancing:AddTags"
     ]
@@ -220,7 +221,7 @@ data "aws_iam_policy_document" "this" {
     condition {
       test     = "StringEquals"
       variable = "elasticloadbalancing:CreateAction"
-      values = [
+      values   = [
         "CreateTargetGroup",
         "CreateLoadBalancer"
       ]
@@ -234,7 +235,7 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = [
       "elasticloadbalancing:ModifyLoadBalancerAttributes",
       "elasticloadbalancing:SetIpAddressType",
@@ -254,7 +255,7 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = [
       "elasticloadbalancing:RegisterTargets",
       "elasticloadbalancing:DeregisterTargets"
@@ -263,7 +264,7 @@ data "aws_iam_policy_document" "this" {
   }
 
   statement {
-    effect = "Allow"
+    effect  = "Allow"
     actions = [
       "elasticloadbalancing:SetWebAcl",
       "elasticloadbalancing:ModifyListener",
