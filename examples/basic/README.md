@@ -2,22 +2,6 @@
 
 The code in this example shows how to use the module with basic configuration and minimal set of other resources.
 
-## Deployment methods
-
-### Helm
-Deploy helm chart by helm (default method, set `enabled = true`)
-
-### Argo kubernetes
-Deploy helm chart as argo application by kubernetes manifest (set `enabled = true` and `argo_enabled = true`)
-
-### Argo helm
-Create helm release resource and deploy it as argo application (set `enabled = true`, `argo_enabled = true` and `argo_helm_enabled = true`)
-
-## AWS IAM resources
-
-To disable of creation IRSA role and IRSA policy, set `irsa_role_create = false` and `irsa_policy_enabled = false`, respectively
-
-
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
