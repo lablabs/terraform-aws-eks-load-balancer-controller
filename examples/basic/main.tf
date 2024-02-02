@@ -1,6 +1,6 @@
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "3.13.0"
+  version = "5.5.1"
 
   name               = "lb_controller-vpc"
   cidr               = "10.0.0.0/16"

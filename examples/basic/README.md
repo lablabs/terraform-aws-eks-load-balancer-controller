@@ -24,7 +24,7 @@ To disable of creation IRSA role and IRSA policy, set `irsa_role_create = false`
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.19.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0 |
 | <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2.6.0 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.11.0 |
 
@@ -40,7 +40,7 @@ To disable of creation IRSA role and IRSA policy, set `irsa_role_create = false`
 | <a name="module_lbc_disabled"></a> [lbc\_disabled](#module\_lbc\_disabled) | ../../ | n/a |
 | <a name="module_lbc_without_irsa_policy"></a> [lbc\_without\_irsa\_policy](#module\_lbc\_without\_irsa\_policy) | ../../ | n/a |
 | <a name="module_lbc_without_irsa_role"></a> [lbc\_without\_irsa\_role](#module\_lbc\_without\_irsa\_role) | ../../ | n/a |
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | 3.13.0 |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | 5.5.1 |
 
 ## Resources
 
