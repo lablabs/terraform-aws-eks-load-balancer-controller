@@ -22,7 +22,7 @@ variable "helm_chart_name" {
 
 variable "helm_chart_version" {
   type        = string
-  default     = "1.7.0"
+  default     = "1.10.1"
   description = "Version of the Helm chart"
 }
 
