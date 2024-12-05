@@ -198,6 +198,12 @@ variable "argo_helm_values" {
   description = "Value overrides to use when deploying argo application object with helm"
 }
 
+variable "helm_enabled" {
+  type        = bool
+  default     = true
+  description = "Determines if the helm chart should be installed"
+}
+
 variable "helm_create_namespace" {
   type        = bool
   default     = true
