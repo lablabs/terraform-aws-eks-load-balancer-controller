@@ -101,7 +101,7 @@ data "aws_iam_policy_document" "this" {
     actions = [
       "ec2:CreateTags"
     ]
-    resources = ["arn:aws:ec2:*:*:security-group/*"]
+    resources = ["arn:${var.aws_partition}:ec2:*:*:security-group/*"]
     condition {
       test     = "StringEquals"
       variable = "ec2:CreateAction"
@@ -120,7 +120,7 @@ data "aws_iam_policy_document" "this" {
       "ec2:CreateTags",
       "ec2:DeleteTags"
     ]
-    resources = ["arn:aws:ec2:*:*:security-group/*"]
+    resources = ["arn:${var.aws_partition}:ec2:*:*:security-group/*"]
     condition {
       test     = "Null"
       variable = "aws:RequestTag/elbv2.k8s.aws/cluster"
@@ -180,9 +180,9 @@ data "aws_iam_policy_document" "this" {
       "elasticloadbalancing:RemoveTags"
     ]
     resources = [
-      "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*",
-      "arn:aws:elasticloadbalancing:*:*:loadbalancer/net/*/*",
-      "arn:aws:elasticloadbalancing:*:*:loadbalancer/app/*/*"
+      "arn:${var.aws_partition}:elasticloadbalancing:*:*:targetgroup/*/*",
+      "arn:${var.aws_partition}:elasticloadbalancing:*:*:loadbalancer/net/*/*",
+      "arn:${var.aws_partition}:elasticloadbalancing:*:*:loadbalancer/app/*/*"
     ]
     condition {
       test     = "Null"
@@ -203,10 +203,10 @@ data "aws_iam_policy_document" "this" {
       "elasticloadbalancing:RemoveTags"
     ]
     resources = [
-      "arn:aws:elasticloadbalancing:*:*:listener/net/*/*/*",
-      "arn:aws:elasticloadbalancing:*:*:listener/app/*/*/*",
-      "arn:aws:elasticloadbalancing:*:*:listener-rule/net/*/*/*",
-      "arn:aws:elasticloadbalancing:*:*:listener-rule/app/*/*/*"
+      "arn:${var.aws_partition}:elasticloadbalancing:*:*:listener/net/*/*/*",
+      "arn:${var.aws_partition}:elasticloadbalancing:*:*:listener/app/*/*/*",
+      "arn:${var.aws_partition}:elasticloadbalancing:*:*:listener-rule/net/*/*/*",
+      "arn:${var.aws_partition}:elasticloadbalancing:*:*:listener-rule/app/*/*/*"
     ]
   }
 
@@ -216,9 +216,9 @@ data "aws_iam_policy_document" "this" {
       "elasticloadbalancing:AddTags"
     ]
     resources = [
-      "arn:aws:elasticloadbalancing:*:*:targetgroup/*/*",
-      "arn:aws:elasticloadbalancing:*:*:loadbalancer/net/*/*",
-      "arn:aws:elasticloadbalancing:*:*:loadbalancer/app/*/*"
+      "arn:${var.aws_partition}:elasticloadbalancing:*:*:targetgroup/*/*",
+      "arn:${var.aws_partition}:elasticloadbalancing:*:*:loadbalancer/net/*/*",
+      "arn:${var.aws_partition}:elasticloadbalancing:*:*:loadbalancer/app/*/*"
     ]
     condition {
       test     = "StringEquals"
@@ -263,7 +263,7 @@ data "aws_iam_policy_document" "this" {
       "elasticloadbalancing:RegisterTargets",
       "elasticloadbalancing:DeregisterTargets"
     ]
-    resources = ["arn:aws:elasticloadbalancing:*:*:targetgroup/*/*"]
+    resources = ["arn:${var.aws_partition}:elasticloadbalancing:*:*:targetgroup/*/*"]
   }
 
   statement {
