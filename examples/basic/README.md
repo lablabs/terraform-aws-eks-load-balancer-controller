@@ -22,6 +22,7 @@ The code in this example shows how to use the module with basic configuration an
 | <a name="module_lb_controller_argo_kubernetes"></a> [lb\_controller\_argo\_kubernetes](#module\_lb\_controller\_argo\_kubernetes) | ../../ | n/a |
 | <a name="module_lb_controller_helm"></a> [lb\_controller\_helm](#module\_lb\_controller\_helm) | ../../ | n/a |
 | <a name="module_lbc_disabled"></a> [lbc\_disabled](#module\_lbc\_disabled) | ../../ | n/a |
+| <a name="module_lbc_with_eks_pod_identity_role"></a> [lbc\_with\_eks\_pod\_identity\_role](#module\_lbc\_with\_eks\_pod\_identity\_role) | ../../ | n/a |
 | <a name="module_lbc_without_irsa_policy"></a> [lbc\_without\_irsa\_policy](#module\_lbc\_without\_irsa\_policy) | ../../ | n/a |
 | <a name="module_lbc_without_irsa_role"></a> [lbc\_without\_irsa\_role](#module\_lbc\_without\_irsa\_role) | ../../ | n/a |
 | <a name="module_vpc"></a> [vpc](#module\_vpc) | terraform-aws-modules/vpc/aws | 5.5.1 |

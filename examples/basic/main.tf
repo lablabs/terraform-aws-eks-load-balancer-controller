@@ -62,6 +62,16 @@ module "lbc_without_irsa_policy" {
   cluster_identity_oidc_issuer_arn = module.eks_cluster.eks_cluster_identity_oidc_issuer_arn
 }
 
+module "lbc_with_eks_pod_identity_role" {
+  source = "../../"
+
+  eks_pod_identity_role_create     = true
+  irsa_role_create                 = false
+  cluster_name                     = module.eks_cluster.eks_cluster_id
+  cluster_identity_oidc_issuer     = module.eks_cluster.eks_cluster_identity_oidc_issuer
+  cluster_identity_oidc_issuer_arn = module.eks_cluster.eks_cluster_identity_oidc_issuer_arn
+
+}
 
 module "lb_controller_helm" {
   source = "../../"

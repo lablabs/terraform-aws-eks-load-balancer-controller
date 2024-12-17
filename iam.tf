@@ -3,7 +3,7 @@ locals {
 }
 
 data "aws_iam_policy_document" "this" {
-  count = local.irsa_role_create && var.irsa_policy_enabled ? 1 : 0
+  count = (local.irsa_role_create && var.irsa_policy_enabled) || (local.eks_pod_identity_role_create && var.eks_pod_identity_policy_enabled) ? 1 : 0
 
   # https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/v2.10.1/docs/install/iam_policy.json
   #checkov:skip=CKV_AWS_109:The official documentation was used to define these policies
