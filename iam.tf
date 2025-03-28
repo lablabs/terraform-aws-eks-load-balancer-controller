@@ -5,7 +5,7 @@ locals {
 data "aws_iam_policy_document" "this" {
   count = (local.irsa_role_create && var.irsa_policy_enabled) || (local.eks_pod_identity_role_create && var.eks_pod_identity_policy_enabled) ? 1 : 0
 
-  # https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/v2.11.0/docs/install/iam_policy.json
+  # https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/v2.12.0/docs/install/iam_policy.json
   #checkov:skip=CKV_AWS_109:The official documentation was used to define these policies
   #checkov:skip=CKV_AWS_111:The official documentation was used to define these policies
   #checkov:skip=CKV_AWS_356
@@ -39,7 +39,7 @@ data "aws_iam_policy_document" "this" {
       "ec2:GetCoipPoolUsage",
       "ec2:DescribeCoipPools",
       "ec2:GetSecurityGroupsForVpc",
-      "elasticloadbalancing:DescribeListenerAttributes",
+      "ec2:DescribeIpamPools",
       "elasticloadbalancing:DescribeLoadBalancers",
       "elasticloadbalancing:DescribeLoadBalancerAttributes",
       "elasticloadbalancing:DescribeListeners",
@@ -51,6 +51,7 @@ data "aws_iam_policy_document" "this" {
       "elasticloadbalancing:DescribeTargetHealth",
       "elasticloadbalancing:DescribeTags",
       "elasticloadbalancing:DescribeTrustStores",
+      "elasticloadbalancing:DescribeListenerAttributes",
       "elasticloadbalancing:DescribeCapacityReservation"
     ]
     resources = ["*"]
@@ -240,7 +241,6 @@ data "aws_iam_policy_document" "this" {
   statement {
     effect = "Allow"
     actions = [
-      "elasticloadbalancing:ModifyListenerAttributes",
       "elasticloadbalancing:ModifyLoadBalancerAttributes",
       "elasticloadbalancing:SetIpAddressType",
       "elasticloadbalancing:SetSecurityGroups",
@@ -249,7 +249,9 @@ data "aws_iam_policy_document" "this" {
       "elasticloadbalancing:ModifyTargetGroup",
       "elasticloadbalancing:ModifyTargetGroupAttributes",
       "elasticloadbalancing:DeleteTargetGroup",
-      "elasticloadbalancing:ModifyCapacityReservation"
+      "elasticloadbalancing:ModifyListenerAttributes",
+      "elasticloadbalancing:ModifyCapacityReservation",
+      "elasticloadbalancing:ModifyIpPools"
     ]
     resources = ["*"]
     condition {
@@ -275,7 +277,8 @@ data "aws_iam_policy_document" "this" {
       "elasticloadbalancing:ModifyListener",
       "elasticloadbalancing:AddListenerCertificates",
       "elasticloadbalancing:RemoveListenerCertificates",
-      "elasticloadbalancing:ModifyRule"
+      "elasticloadbalancing:ModifyRule",
+      "elasticloadbalancing:SetRulePriorities"
     ]
     resources = ["*"]
   }
