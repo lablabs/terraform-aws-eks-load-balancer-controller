@@ -8,6 +8,9 @@ locals {
         "eks.amazonaws.com/role-arn" : local.irsa_role_create ? aws_iam_role.this[0].arn : ""
       }
     }
+    "podMutatorWebhookConfig" : {
+      "failurePolicy" : "Fail"
+    }
   })
 }
 
