@@ -408,3 +408,9 @@ variable "aws_partition" {
   default     = "aws"
   description = "AWS partition in which the resources are located. Available values are `aws`, `aws-cn`, `aws-us-gov`"
 }
+
+variable "additional_iam_policy" {
+  type        = string
+  default     = "{}"
+  description = "Allow to Update additional IAM policy for aws-load-balancer-controller service."
+}

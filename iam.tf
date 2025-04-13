@@ -287,8 +287,15 @@ resource "aws_iam_policy" "this" {
   path        = "/"
   description = "Policy for aws-load-balancer-controller service"
 
-  policy = data.aws_iam_policy_document.this[0].json
+  policy = data.aws_iam_policy_document.combine_additional_policy.json
   tags   = var.irsa_tags
+}
+
+data "aws_iam_policy_document" "combine_additional_policy" {
+  source_policy_documents   = [
+    data.aws_iam_policy_document.this[0].json,
+    var.additional_iam_policy
+  ]
 }
 
 data "aws_iam_policy_document" "this_assume" {
