@@ -1,0 +1,50 @@
+{
+  "labels": [
+    "dependencies"
+  ],
+  "enabledManagers": [
+    "asdf",
+    "github-actions",
+    "custom.regex"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "^\\.github/workflows/.*ya?ml$"
+      ],
+      "matchStrings": [
+        "#\\s*renovate:\\s*datasource=(?<datasource>.*?)\\s*depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s+\\S+_VERSION:\\s*[\"']?(?<currentValue>.*?)[\"']?(?:^|\\s|\\r\\n|\\r|\\n|$)",
+        "#\\s*renovate:\\s*datasource=(?<datasource>.*?)\\s*depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s+\\S+_VERSION:\\s*[\"']?(?<currentDigest>.*?)[\"']?\\s*#\\s*(?<currentValue>.*?)(?:^|\\s|\\r\\n|\\r|\\n|$)"
+      ],
+      "datasourceTemplate": "{{datasource}}",
+      "depNameTemplate": "{{depName}}",
+      "versioningTemplate": "{{#if versioning}}{{versioning}}{{else}}semver{{/if}}"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "\\.tf$"
+      ],
+      "matchStrings": [
+        "default\\s*=\\s*[\"']?(?<currentValue>.*?)[\"']?\\s*#\\s*renovate:\\s*datasource=(?<datasource>.*?)\\s*depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?(?:^|\\s|\\r\\n|\\r|\\n|$)"
+      ],
+      "datasourceTemplate": "{{datasource}}",
+      "depNameTemplate": "{{depName}}",
+      "versioningTemplate": "{{#if versioning}}{{versioning}}{{else}}semver{{/if}}"
+    }
+  ],
+  "pinDigests": true,
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "tflint"
+      ],
+      "matchUpdateTypes": [
+        "major",
+        "minor"
+      ],
+      "enabled": false
+    }
+  ]
+}

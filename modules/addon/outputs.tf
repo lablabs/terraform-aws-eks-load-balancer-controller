@@ -4,16 +4,11 @@ output "helm_release_metadata" {
 }
 
 output "helm_release_application_metadata" {
-  description = "Argo application helm release attributes"
+  description = "ArgoCD Application Helm release attributes"
   value       = try(helm_release.argo_application[0].metadata, {})
 }
 
 output "kubernetes_application_attributes" {
-  description = "Argo kubernetes manifest attributes"
+  description = "ArgoCD Kubernetes manifest attributes"
   value       = try(kubernetes_manifest.this[0], {})
-}
-
-output "iam_role_attributes" {
-  description = "IAM role atributes"
-  value       = try(aws_iam_role.this[0], {})
 }

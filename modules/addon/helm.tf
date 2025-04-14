@@ -1,5 +1,6 @@
 resource "helm_release" "this" {
-  count            = var.enabled && var.helm_enabled && !var.argo_enabled ? 1 : 0
+  count = var.enabled == true && var.helm_enabled == true && var.argo_enabled == false ? 1 : 0
+
   chart            = var.helm_chart_name
   create_namespace = var.helm_create_namespace
   namespace        = var.namespace
@@ -34,12 +35,13 @@ resource "helm_release" "this" {
   description                = var.helm_description
   lint                       = var.helm_lint
 
-  values = [
-    data.utils_deep_merge_yaml.values[0].output
-  ]
+  values = compact([
+    var.values
+  ])
 
   dynamic "set" {
     for_each = var.settings
+
     content {
       name  = set.key
       value = set.value
@@ -48,6 +50,7 @@ resource "helm_release" "this" {
 
   dynamic "set_sensitive" {
     for_each = var.helm_set_sensitive
+
     content {
       name  = set_sensitive.key
       value = set_sensitive.value
@@ -56,9 +59,9 @@ resource "helm_release" "this" {
 
   dynamic "postrender" {
     for_each = var.helm_postrender
+
     content {
       binary_path = postrender.value
     }
   }
-
 }
