@@ -1,33 +1,26 @@
 /**
- * # AWS EKS Universal Addon Terraform module
+ * # AWS EKS Load Balancer Controller Terraform module
  *
- * A Terraform module to deploy the universal addon on Amazon EKS cluster.
+ * A Terraform module to deploy the AWS Load Balancer Controller on Amazon EKS cluster.
  *
- * [![Terraform validate](https://github.com/lablabs/terraform-aws-eks-universal-addon/actions/workflows/validate.yaml/badge.svg)](https://github.com/lablabs/terraform-aws-eks-universal-addon/actions/workflows/validate.yaml)
- * [![pre-commit](https://github.com/lablabs/terraform-aws-eks-universal-addon/actions/workflows/pre-commit.yaml/badge.svg)](https://github.com/lablabs/terraform-aws-eks-universal-addon/actions/workflows/pre-commit.yaml)
+ * [![Terraform validate](https://github.com/lablabs/terraform-aws-eks-load-balancer-controller/actions/workflows/validate.yaml)
+ * [![pre-commit](https://github.com/lablabs/terraform-aws-eks-load-balancer-controller/actions/workflows/pre-commit.yml)
  */
-# FIXME config: update addon docs above
 locals {
   # FIXME config: add addon configuration here
   addon = {
-    name = "universal-addon"
+    # TODO: Is the name correct?
+    name = "load-balancer-controller"
 
-    helm_chart_name    = "raw"
-    helm_chart_version = "0.1.0"
-    helm_repo_url      = "https://lablabs.github.io"
+    helm_chart_name    = "aws-load-balancer-controller"
+    helm_chart_version = "1.11.0"
+    helm_repo_url      = "https://aws.github.io/eks-charts"
   }
 
   # FIXME config: add addon IRSA configuration here or remove if not needed
   addon_irsa = {
     (local.addon.name) = {
       # FIXME config: add default IRSA overrides here or leave empty if not needed, but make sure to keep at least one key
-    }
-  }
-
-  # FIXME config: add addon OIDC configuration here or remove if not needed
-  addon_oidc = {
-    (local.addon.name) = {
-      # FIXME config: add default OIDC overrides here or leave empty if not needed, but make sure to keep at least one key
     }
   }
 
