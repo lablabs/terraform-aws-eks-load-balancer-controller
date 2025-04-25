@@ -12,12 +12,15 @@ locals {
     name = "load-balancer-controller"
 
     helm_chart_name    = "aws-load-balancer-controller"
-    helm_chart_version = "1.11.0"
+    helm_chart_version = "1.12.0"
     helm_repo_url      = "https://aws.github.io/eks-charts"
   }
 
   addon_irsa = {
-    (local.addon.name) = {}
+    (local.addon.name) = {
+      irsa_policy_enabled = var.irsa_policy_enabled != null ? var.irsa_policy_enabled : true
+      irsa_policy         = var.irsa_policy != null ? var.irsa_policy : file("${path.module}/default_irsa_policy.json")
+    }
   }
 
   addon_values = yamlencode({
@@ -27,6 +30,9 @@ locals {
       annotations = module.addon-irsa[local.addon.name].irsa_role_enabled ? {
         "eks.amazonaws.com/role-arn" = module.addon-irsa[local.addon.name].iam_role_attributes.arn
       } : tomap({})
+    }
+    podMutatorWebhookConfig = {
+      failurePolicy = "Fail"
     }
   })
 }
