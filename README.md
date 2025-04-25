@@ -145,7 +145,6 @@ See [basic example](examples/basic) for further information.
 | <a name="input_service_account_namespace"></a> [service\_account\_namespace](#input\_service\_account\_namespace) | The Kubernetes Service Account namespace. Defaults to the addon namespace. Defaults to `""`. | `string` |
 | <a name="input_settings"></a> [settings](#input\_settings) | Additional Helm sets which will be passed to the Helm chart values or Kustomize or directory configuration which will be passed to ArgoCD Application source. Defaults to `{}`. | `map(any)` |
 | <a name="input_values"></a> [values](#input\_values) | Additional YAML encoded values which will be passed to the Helm chart. Defaults to `""`. | `string` |
->>>>>>> 9b5665e (refactor: switch to universal addon)
 ## Outputs
 
 | Name | Description |
