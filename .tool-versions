@@ -5,3 +5,6 @@ checkov 3.2.352
 awscli 2.25.10
 pre-commit 4.2.0
 python 3.13.2
+
+# added by mhs
+kubectl 1.30.9
