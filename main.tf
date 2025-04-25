@@ -7,7 +7,6 @@
  * [![pre-commit](https://github.com/lablabs/terraform-aws-eks-load-balancer-controller/actions/workflows/pre-commit.yml)
  */
 locals {
-  # FIXME config: add addon configuration here
   addon = {
     # TODO: Is the name correct?
     name = "load-balancer-controller"
@@ -17,14 +16,17 @@ locals {
     helm_repo_url      = "https://aws.github.io/eks-charts"
   }
 
-  # FIXME config: add addon IRSA configuration here or remove if not needed
   addon_irsa = {
-    (local.addon.name) = {
-      # FIXME config: add default IRSA overrides here or leave empty if not needed, but make sure to keep at least one key
-    }
+    (local.addon.name) = {}
   }
 
   addon_values = yamlencode({
-    # FIXME config: add default values here
+    serviceAccount = {
+      create = var.service_account_create != null ? var.service_account_create : true
+      name   = var.service_account_name != null ? var.service_account_name : local.addon.name
+      annotations = module.addon-irsa[local.addon.name].irsa_role_enabled ? {
+        "eks.amazonaws.com/role-arn" = module.addon-irsa[local.addon.name].iam_role_attributes.arn
+      } : tomap({})
+    }
   })
 }
