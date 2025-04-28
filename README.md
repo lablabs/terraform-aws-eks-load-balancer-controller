@@ -56,6 +56,11 @@ See [basic example](examples/basic) for further information.
 
 | Name | Type |
 |------|------|
+| [aws_eks_pod_identity_association.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_pod_identity_association) | resource |
+| [aws_iam_policy.eks_pod_identity](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
+| [aws_iam_role.eks_pod_identity](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy_attachment.eks_pod_identity](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_policy_document.eks_pod_identity_assume](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [utils_deep_merge_yaml.values](https://registry.terraform.io/providers/cloudposse/utils/latest/docs/data-sources/deep_merge_yaml) | data source |
 > [!IMPORTANT]
@@ -64,6 +69,7 @@ See [basic example](examples/basic) for further information.
 
 | Name | Description | Type |
 |------|-------------|------|
+| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | The name of the cluster | `string` |
 | <a name="input_argo_apiversion"></a> [argo\_apiversion](#input\_argo\_apiversion) | ArgoCD Application apiVersion. Defaults to `argoproj.io/v1alpha1`. | `string` |
 | <a name="input_argo_destination_server"></a> [argo\_destination\_server](#input\_argo\_destination\_server) | Destination server for ArgoCD Application. Defaults to `https://kubernetes.default.svc`. | `string` |
 | <a name="input_argo_enabled"></a> [argo\_enabled](#input\_argo\_enabled) | If set to `true`, the module will be deployed as ArgoCD Application, otherwise it will be deployed as a Helm release. Defaults to `false`. | `bool` |
@@ -93,6 +99,10 @@ See [basic example](examples/basic) for further information.
 | <a name="input_aws_partition"></a> [aws\_partition](#input\_aws\_partition) | AWS partition in which the resources are located. Available values are `aws`, `aws-cn`, `aws-us-gov` | `string` |
 | <a name="input_cluster_identity_oidc_issuer"></a> [cluster\_identity\_oidc\_issuer](#input\_cluster\_identity\_oidc\_issuer) | The OIDC Identity issuer for the cluster (required). | `string` |
 | <a name="input_cluster_identity_oidc_issuer_arn"></a> [cluster\_identity\_oidc\_issuer\_arn](#input\_cluster\_identity\_oidc\_issuer\_arn) | The OIDC Identity issuer ARN for the cluster that can be used to associate IAM roles with a Service Account (required). | `string` |
+| <a name="input_eks_pod_identity_policy_enabled"></a> [eks\_pod\_identity\_policy\_enabled](#input\_eks\_pod\_identity\_policy\_enabled) | Whether to create opinionated policy for LB controller, see https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/v2.12.0/docs/install/iam_policy.json | `bool` |
+| <a name="input_eks_pod_identity_role_create"></a> [eks\_pod\_identity\_role\_create](#input\_eks\_pod\_identity\_role\_create) | Determines whether to enable support for the EKS pod identity | `bool` |
+| <a name="input_eks_pod_identity_role_name_prefix"></a> [eks\_pod\_identity\_role\_name\_prefix](#input\_eks\_pod\_identity\_role\_name\_prefix) | The EKS pod identity role name prefix for LB controller | `string` |
+| <a name="input_eks_pod_identity_tags"></a> [eks\_pod\_identity\_tags](#input\_eks\_pod\_identity\_tags) | The EKS Pod identity resources tags | `map(string)` |
 | <a name="input_enabled"></a> [enabled](#input\_enabled) | Set to false to prevent the module from creating any resources. | `bool` |
 | <a name="input_helm_atomic"></a> [helm\_atomic](#input\_helm\_atomic) | If set, installation process purges chart on fail. The wait flag will be set automatically if atomic is used. Defaults to `false`. | `bool` |
 | <a name="input_helm_chart_name"></a> [helm\_chart\_name](#input\_helm\_chart\_name) | Helm chart name to be installed. Required if `argo_source_type` is set to `helm`. Defaults to `null`. | `string` |
