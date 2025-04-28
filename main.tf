@@ -8,8 +8,7 @@
  */
 locals {
   addon = {
-    # TODO: Is the name correct?
-    name = "load-balancer-controller"
+    name = "aws-load-balancer-controller"
 
     helm_chart_name    = "aws-load-balancer-controller"
     helm_chart_version = "1.12.0"
