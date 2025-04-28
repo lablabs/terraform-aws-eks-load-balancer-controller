@@ -22,6 +22,13 @@ locals {
     }
   }
 
+  addon_pod_identity = {
+    (local.addon.name) = {
+      pod_identity_policy_enabled = var.pod_identity_policy_enabled != null ? var.pod_identity_policy_enabled : true
+      pod_identity_policy         = var.pod_identity_policy != null ? var.pod_identity_policy : data.aws_iam_policy_document.default_policy.json
+    }
+  }
+
   addon_values = yamlencode({
     serviceAccount = {
       create = var.service_account_create != null ? var.service_account_create : true
