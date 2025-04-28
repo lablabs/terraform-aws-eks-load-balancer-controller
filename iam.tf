@@ -1,4 +1,7 @@
-data "aws_iam_policy_document" "default_policy" {
+data "aws_iam_policy_document" "this" {
+  #count = (var.enabled && var.irsa_policy == null) || (var.enabled && var.pod_identity_policy == null) ? 1 : 0
+  count = (var.enabled && var.irsa_policy == null) ? 1 : 0
+
   # https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/v2.11.0/docs/install/iam_policy.json
   #checkov:skip=CKV_AWS_109:The official documentation was used to define these policies
   #checkov:skip=CKV_AWS_111:The official documentation was used to define these policies
