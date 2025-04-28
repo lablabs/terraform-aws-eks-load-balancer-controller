@@ -56,6 +56,7 @@ See [basic example](examples/basic) for further information.
 
 | Name | Type |
 |------|------|
+| [aws_iam_policy_document.default_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [utils_deep_merge_yaml.values](https://registry.terraform.io/providers/cloudposse/utils/latest/docs/data-sources/deep_merge_yaml) | data source |
 > [!IMPORTANT]
 > Variables defined in [variables-addon[-irsa|oidc].tf](variables-addon.tf) defaults to `null` to have them overridable by the addon configuration defined though the [`local.addon[_irsa|oidc].*`](main.tf) local variable with the default values defined in [addon[-irsa|oidc].tf](addon.tf).

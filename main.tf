@@ -18,7 +18,7 @@ locals {
   addon_irsa = {
     (local.addon.name) = {
       irsa_policy_enabled = var.irsa_policy_enabled != null ? var.irsa_policy_enabled : true
-      irsa_policy         = var.irsa_policy != null ? var.irsa_policy : file("${path.module}/default_irsa_policy.json")
+      irsa_policy         = var.irsa_policy != null ? var.irsa_policy : data.aws_iam_policy_document.default_policy.json
     }
   }
 
