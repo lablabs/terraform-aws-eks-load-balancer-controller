@@ -1,10 +1,9 @@
 locals {
   service_account_create       = var.service_account_create != null ? var.service_account_create : true
   service_account_name         = var.service_account_name != null ? var.service_account_name : try(local.addon.name)
-  service_account_namespace    = var.service_account_namespace != null ? var.service_account_namespace : try(local.addon.namespace, local.addon.name)
+  service_account_namespace    = var.service_account_namespace != null ? var.service_account_namespace : local.addon_namespace
   eks_pod_identity_role_create = var.enabled && local.service_account_create && var.eks_pod_identity_role_create
   helm_release_name            = local.addon_name
-
 }
 
 resource "aws_iam_policy" "eks_pod_identity" {
