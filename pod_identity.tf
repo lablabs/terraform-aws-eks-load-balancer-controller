@@ -8,7 +8,7 @@ locals {
   pod_identity_policy       = var.pod_identity_policy != null ? var.pod_identity_policy : data.aws_iam_policy_document.this[0].json
 }
 
-data "aws_iam_policy_document" "pod_identity_assume" {
+data "aws_iam_policy_document" "pod_identity" {
   count = local.pod_identity_role_create ? 1 : 0
 
   statement {
@@ -39,7 +39,7 @@ resource "aws_iam_role" "pod_identity" {
   count = local.pod_identity_role_create ? 1 : 0
 
   name                 = local.pod_identity_role_name # tflint-ignore: aws_iam_role_invalid_name
-  assume_role_policy   = data.aws_iam_policy_document.pod_identity_assume[0].json
+  assume_role_policy   = data.aws_iam_policy_document.pod_identity[0].json
   permissions_boundary = var.pod_identity_permissions_boundary
 
   tags = var.pod_identity_tags
@@ -59,7 +59,7 @@ resource "aws_iam_role_policy_attachment" "pod_identity_additional" {
   policy_arn = each.value
 }
 
-resource "aws_eks_pod_identity_association" "this" {
+resource "aws_eks_pod_identity_association" "pod_identity" {
   count = local.pod_identity_role_create ? 1 : 0
 
   cluster_name    = var.cluster_name
