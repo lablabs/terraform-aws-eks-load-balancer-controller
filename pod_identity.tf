@@ -2,20 +2,14 @@ locals {
   service_account_create    = var.service_account_create != null ? var.service_account_create : true
   service_account_name      = var.service_account_name != null ? var.service_account_name : try(local.addon.name)
   service_account_namespace = var.service_account_namespace != null ? var.service_account_namespace : local.addon_namespace
-  #pod_identity_role_create     = var.enabled && local.service_account_create && var.pod_identity_role_create
-  #helm_release_name            = local.addon_name
-
-  rbac_create = var.rbac_create != null ? var.rbac_create : true
-
-  pod_identity_role_create         = var.enabled && var.rbac_create && var.service_account_create && var.pod_identity_role_create
-  pod_identity_role_name           = trim("${var.pod_identity_role_name_prefix}-${var.pod_identity_role_name}", "-")
-  pod_identity_policy_enabled      = var.pod_identity_policy_enabled && length(var.pod_identity_policy) > 0
-  pod_identity_assume_role_enabled = var.pod_identity_assume_role_enabled
-
+  rbac_create               = var.rbac_create != null ? var.rbac_create : true
+  pod_identity_role_create  = var.enabled && local.rbac_create && local.service_account_create && var.pod_identity_role_create
+  pod_identity_role_name    = var.pod_identity_role_name != null ? var.pod_identity_role_name : trim("${var.pod_identity_role_name_prefix}-${local.addon.name}", "-")
+  pod_identity_policy       = var.pod_identity_policy != null ? var.pod_identity_policy : data.aws_iam_policy_document.this[0].json
 }
 
 data "aws_iam_policy_document" "pod_identity_assume" {
-  count = local.pod_identity_role_create && local.pod_identity_assume_role_enabled ? 1 : 0
+  count = local.pod_identity_role_create ? 1 : 0
 
   statement {
     actions = [
@@ -33,24 +27,18 @@ data "aws_iam_policy_document" "pod_identity_assume" {
 }
 
 resource "aws_iam_policy" "pod_identity" {
-  count = local.pod_identity_role_create && (local.pod_identity_policy_enabled || local.pod_identity_assume_role_enabled) ? 1 : 0
-  #name        = "${var.pod_identity_role_name_prefix}-${local.helm_release_name}"
+  count       = local.pod_identity_role_create && (var.pod_identity_policy_enabled) ? 1 : 0
   name        = local.pod_identity_role_name # tflint-ignore: aws_iam_policy_invalid_name
   description = "Policy for aws-load-balancer-controller service"
 
-  #policy = data.aws_iam_policy_document.this[0].json
-  #policy = var.pod_identity_assume_role_enabled ? data.aws_iam_policy_document.this_assume[0].json : var.pod_identity_policy
-  policy = var.pod_identity_assume_role_enabled ? data.aws_iam_policy_document.this[0].json : var.pod_identity_policy
+  policy = local.pod_identity_policy
   tags   = var.pod_identity_tags
 }
 
 resource "aws_iam_role" "pod_identity" {
   count = local.pod_identity_role_create ? 1 : 0
 
-  #name               = "${var.pod_identity_role_name_prefix}-${local.helm_release_name}"
-  name = local.pod_identity_role_name # tflint-ignore: aws_iam_role_invalid_name
-  #assume_role_policy = data.aws_iam_policy_document.pod_identity_assume[0].json
-  #assume_role_policy   = data.aws_iam_policy_document.this_pod_identity[0].json
+  name                 = local.pod_identity_role_name # tflint-ignore: aws_iam_role_invalid_name
   assume_role_policy   = data.aws_iam_policy_document.pod_identity_assume[0].json
   permissions_boundary = var.pod_identity_permissions_boundary
 
@@ -58,8 +46,7 @@ resource "aws_iam_role" "pod_identity" {
 }
 
 resource "aws_iam_role_policy_attachment" "pod_identity" {
-  #count = local.pod_identity_role_create ? 1 : 0
-  count = local.pod_identity_role_create && (local.pod_identity_policy_enabled || local.pod_identity_assume_role_enabled) ? 1 : 0
+  count = local.pod_identity_role_create && (var.pod_identity_policy_enabled) ? 1 : 0
 
   role       = aws_iam_role.pod_identity[0].name
   policy_arn = aws_iam_policy.pod_identity[0].arn
@@ -72,10 +59,6 @@ resource "aws_iam_role_policy_attachment" "pod_identity_additional" {
   policy_arn = each.value
 }
 
-
-
-
-
 resource "aws_eks_pod_identity_association" "this" {
   count = local.pod_identity_role_create ? 1 : 0
 
@@ -83,4 +66,5 @@ resource "aws_eks_pod_identity_association" "this" {
   namespace       = local.service_account_namespace
   service_account = local.service_account_name
   role_arn        = aws_iam_role.pod_identity[0].arn
+  tags            = var.pod_identity_tags
 }
