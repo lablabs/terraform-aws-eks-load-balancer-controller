@@ -1,7 +1,12 @@
-data "aws_iam_policy_document" "this" {
-  count = (var.enabled && (var.irsa_policy == null || var.pod_identity_policy == null)) ? 1 : 0
+locals {
+  irsa_policy_enabled = var.irsa_policy_enabled != null ? var.irsa_policy_enabled : var.irsa_assume_role_enabled != true
+}
 
-  # https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/v2.11.0/docs/install/iam_policy.json
+data "aws_iam_policy_document" "this" {
+  count = var.enabled && ((local.irsa_policy_enabled && var.irsa_policy == null) || (var.pod_identity_policy_enabled && var.pod_identity_policy == null)) ? 1 : 0
+
+
+  # https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/v2.12.0/docs/install/iam_policy.json
   #checkov:skip=CKV_AWS_109:The official documentation was used to define these policies
   #checkov:skip=CKV_AWS_111:The official documentation was used to define these policies
   #checkov:skip=CKV_AWS_356
