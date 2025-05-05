@@ -10,7 +10,6 @@ locals {
   addon = {
     name = "aws-load-balancer-controller"
 
-    helm_chart_name    = "aws-load-balancer-controller"
     helm_chart_version = "1.12.0"
     helm_repo_url      = "https://aws.github.io/eks-charts"
   }
