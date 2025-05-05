@@ -21,6 +21,7 @@ module "addon_installation_helm" {
 
   values = yamlencode({
     # insert sample values here
+    clusterName = module.eks_cluster.eks_cluster_id
   })
 }
 
@@ -41,6 +42,7 @@ module "addon_installation_helm_pod_identity" {
 
   values = yamlencode({
     # insert sample values here
+    clusterName = module.eks_cluster.eks_cluster_id
   })
 }
 
@@ -59,6 +61,7 @@ module "addon_installation_argo_kubernetes" {
 
   values = yamlencode({
     # insert sample values here
+    clusterName = module.eks_cluster.eks_cluster_id
   })
 
   argo_sync_policy = {
@@ -77,6 +80,11 @@ module "addon_installation_argo_helm" {
   cluster_name                     = module.eks_cluster.eks_cluster_id
   cluster_identity_oidc_issuer     = module.eks_cluster.eks_cluster_identity_oidc_issuer
   cluster_identity_oidc_issuer_arn = module.eks_cluster.eks_cluster_identity_oidc_issuer_arn
+
+  values = yamlencode({
+    # insert sample values here
+    clusterName = module.eks_cluster.eks_cluster_id
+  })
 
   argo_sync_policy = {
     automated   = {}
