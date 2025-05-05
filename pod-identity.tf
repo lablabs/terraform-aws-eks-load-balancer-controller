@@ -1,6 +1,6 @@
 locals {
   pod_identity_service_account_create    = var.service_account_create != null ? var.service_account_create : true
-  pod_identity_service_account_name      = var.service_account_name != null ? var.service_account_name : try(local.addon.name)
+  pod_identity_service_account_name      = var.service_account_name != null ? var.service_account_name : local.addon.name
   pod_identity_service_account_namespace = var.service_account_namespace != null ? var.service_account_namespace : local.addon_namespace
   rbac_create                            = var.rbac_create != null ? var.rbac_create : true
   pod_identity_role_create               = var.enabled && local.rbac_create && local.pod_identity_service_account_create && var.pod_identity_role_create
