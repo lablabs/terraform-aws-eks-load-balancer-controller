@@ -27,7 +27,7 @@ data "aws_iam_policy_document" "pod_identity" {
 }
 
 resource "aws_iam_policy" "pod_identity" {
-  count       = local.pod_identity_role_create && (var.pod_identity_policy_enabled) ? 1 : 0
+  count       = local.pod_identity_role_create && var.pod_identity_policy_enabled ? 1 : 0
   name        = local.pod_identity_role_name # tflint-ignore: aws_iam_policy_invalid_name
   description = "Policy for aws-load-balancer-controller service"
 
@@ -46,7 +46,7 @@ resource "aws_iam_role" "pod_identity" {
 }
 
 resource "aws_iam_role_policy_attachment" "pod_identity" {
-  count = local.pod_identity_role_create && (var.pod_identity_policy_enabled) ? 1 : 0
+  count = local.pod_identity_role_create && var.pod_identity_policy_enabled ? 1 : 0
 
   role       = aws_iam_role.pod_identity[0].name
   policy_arn = aws_iam_policy.pod_identity[0].arn
