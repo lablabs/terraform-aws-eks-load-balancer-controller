@@ -5,7 +5,7 @@ locals {
   rbac_create                            = var.rbac_create != null ? var.rbac_create : true
   pod_identity_role_create               = var.enabled && local.rbac_create && local.pod_identity_service_account_create && var.pod_identity_role_create
   pod_identity_role_name                 = var.pod_identity_role_name != null ? var.pod_identity_role_name : trim("${var.pod_identity_role_name_prefix}-${local.addon.name}", "-")
-  pod_identity_policy                    = var.pod_identity_policy != null ? var.pod_identity_policy : data.aws_iam_policy_document.this[0].json
+  pod_identity_policy                    = var.pod_identity_policy != null ? var.pod_identity_policy : try(data.aws_iam_policy_document.this[0].json, "")
 }
 
 data "aws_iam_policy_document" "pod_identity" {
