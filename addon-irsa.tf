@@ -33,7 +33,6 @@ module "addon-irsa" {
   irsa_tags = var.irsa_tags != null ? var.irsa_tags : try(each.value.irsa_tags, tomap({}))
 
   # Pod identity
-  # TODO: What should be default value for cluster_name?
   cluster_name = var.cluster_name != null ? var.cluster_name : try(each.value.cluster_name, "")
 
   pod_identity_role_create      = var.pod_identity_role_create != null ? var.pod_identity_role_create : try(each.value.pod_identity_role_create, false)

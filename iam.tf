@@ -1,5 +1,5 @@
 locals {
-  irsa_policy_enabled = var.irsa_policy_enabled != null ? var.irsa_policy_enabled : var.irsa_assume_role_enabled != true
+  irsa_policy_enabled         = var.irsa_policy_enabled != null ? var.irsa_policy_enabled : var.irsa_assume_role_enabled != true
   pod_identity_policy_enabled = var.pod_identity_policy_enabled != null ? var.pod_identity_policy_enabled : true
 }
 
