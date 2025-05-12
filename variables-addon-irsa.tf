@@ -3,13 +3,13 @@
 variable "cluster_identity_oidc_issuer" {
   type        = string
   default     = null
-  description = "The OIDC Identity issuer for the cluster (required for IRSA)."
+  description = "The OIDC Identity issuer for the cluster (required for IRSA). Defaults to `\"\"`."
 }
 
 variable "cluster_identity_oidc_issuer_arn" {
   type        = string
   default     = null
-  description = "The OIDC Identity issuer ARN for the cluster that can be used to associate IAM roles with a Service Account (required for IRSA)."
+  description = "The OIDC Identity issuer ARN for the cluster that can be used to associate IAM roles with a Service Account (required for IRSA). Defaults to `\"\"`."
 }
 
 variable "rbac_create" {
@@ -105,14 +105,13 @@ variable "irsa_assume_role_policy_condition_test" {
 variable "irsa_assume_role_policy_condition_values" {
   type        = list(string)
   default     = null
-  description = "Specifies the values for the assume role trust policy condition. Each entry in this list must follow the required format `system:serviceaccount:$service_account_namespace:$service_account_name`. If this variable is left as the default, `local.irsa_assume_role_policy_condition_values_default` is used instead, which is a list containing a single value. Note that if this list is defined, the `service_account_name` and `service_account_namespace` variables are ignored."
+  description = "Specifies the values for the assume role trust policy condition. Each entry in this list must follow the required format `system:serviceaccount:$service_account_namespace:$service_account_name`. If this variable is left as the default, `local.irsa_assume_role_policy_condition_values_default` is used instead, which is a list containing a single value. Note that if this list is defined, the `service_account_name` and `service_account_namespace` variables are ignored. Defaults to `[]`."
 }
-
 
 variable "cluster_name" {
   type        = string
   default     = null
-  description = "The name of the cluster (required for pod identity)."
+  description = "The name of the cluster (required for pod identity). Defaults to `\"\"`."
 }
 
 variable "pod_identity_role_create" {
