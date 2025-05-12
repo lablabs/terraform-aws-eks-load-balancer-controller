@@ -7,17 +7,17 @@ moved {
 # IRSA
 moved {
   from = aws_iam_policy.this[0]
-  to   = module.addon-irsa["aws-load-balancer-controller"].aws_iam_policy.irsa[0]
+  to   = module.addon-irsa["aws-load-balancer-controller"].aws_iam_policy.this[0]
 }
 
 moved {
   from = aws_iam_role.this[0]
-  to   = module.addon-irsa["aws-load-balancer-controller"].aws_iam_role.irsa[0]
+  to   = module.addon-irsa["aws-load-balancer-controller"].aws_iam_role.this[0]
 }
 
 moved {
   from = aws_iam_role_policy_attachment.this[0]
-  to   = module.addon-irsa["aws-load-balancer-controller"].aws_iam_role_policy_attachment.irsa[0]
+  to   = module.addon-irsa["aws-load-balancer-controller"].aws_iam_role_policy_attachment.this[0]
 }
 
 # Pod identity
