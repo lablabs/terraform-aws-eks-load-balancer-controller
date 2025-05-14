@@ -24,6 +24,7 @@ locals {
   }
 
   addon_values = yamlencode({
+    clusterName = var.cluster_name
     serviceAccount = {
       create = var.service_account_create != null ? var.service_account_create : true
       name   = var.service_account_name != null ? var.service_account_name : local.addon.name
