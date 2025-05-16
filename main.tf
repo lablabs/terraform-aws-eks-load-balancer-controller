@@ -1,7 +1,8 @@
 /**
  * # AWS EKS Load Balancer Controller Terraform module
  *
- * A Terraform module to deploy the AWS Load Balancer Controller on Amazon EKS cluster.
+ * A Terraform module to deploy the [AWS Load Balancer Controller](https://github.com/kubernetes-sigs/aws-load-balancer-controller) on Amazon EKS cluster.
+
  *
  * [![Terraform validate](https://github.com/lablabs/terraform-aws-eks-load-balancer-controller/actions/workflows/validate.yaml)
  * [![pre-commit](https://github.com/lablabs/terraform-aws-eks-load-balancer-controller/actions/workflows/pre-commit.yml)
