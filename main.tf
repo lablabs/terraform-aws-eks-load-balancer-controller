@@ -36,4 +36,6 @@ locals {
       failurePolicy = "Fail"
     }
   })
+
+  addon_depends_on = []
 }
